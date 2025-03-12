@@ -7,35 +7,38 @@
     <link rel="stylesheet" href="frontend/assets/css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Welcome to Innovators Hub</h2>
-        <form id="authForm">
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required>
-            <button type="submit">Continue</button>
-        </form>
-        <p id="message"></p>
-    </div>
+    <header>
+        <h1>Welcome to Innovators Hub</h1>
+        <p>Connect, Innovate, and Grow with Investors, Mentors, and Entrepreneurs.</p>
+    </header>
 
-    <script>
-        document.getElementById("authForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            
-            fetch("backend/auth/check_user.php", {  // Connects to PHP script
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "exists") {
-                    window.location.href = "frontend/pages/dashboard.html";  // Redirect if user exists
-                } else {
-                    window.location.href = "frontend/pages/signup.html";  // Redirect to signup
-                }
-            })
-            .catch(error => console.error("Error:", error));
-        });
-    </script>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="frontend/pages/signup.html">Sign Up</a></li>
+            <li><a href="frontend/pages/login.html">Login</a></li>
+        </ul>
+    </nav>
+
+    <section id="features">
+        <h2>Why Join Innovators Hub?</h2>
+        <div class="feature-box">
+            <h3>🚀 Submit & Manage Projects</h3>
+            <p>Showcase your ideas and get feedback from experts.</p>
+        </div>
+        <div class="feature-box">
+            <h3>💬 Collaborate with Innovators</h3>
+            <p>Join discussions, connect with mentors, and share knowledge.</p>
+        </div>
+        <div class="feature-box">
+            <h3>💰 Secure Investments</h3>
+            <p>Get funding from investors who believe in your vision.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Innovators Hub. All rights reserved.</p>
+    </footer>
 </body>
 </html>
