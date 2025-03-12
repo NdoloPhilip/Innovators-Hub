@@ -21,6 +21,7 @@
             background-color: navy;
             color: white;
             padding: 20px;
+            position: relative;
         }
 
         header h1 {
@@ -32,60 +33,26 @@
             font-size: 1.2em;
         }
 
-        /* Navigation Bar */
-        nav {
+        /* Signup/Login Buttons at Top Right */
+        .auth-buttons {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+        }
+
+        .auth-buttons button {
             background-color: white;
-            padding: 10px 0;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
             color: navy;
+            border: 2px solid navy;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
             font-weight: bold;
         }
 
-        nav ul li a:hover {
-            text-decoration: underline;
-        }
-
-        /* Features Section */
-        #features {
-            padding: 50px;
-            background-color: white;
-        }
-
-        .feature-box {
+        .auth-buttons button:hover {
             background-color: navy;
             color: white;
-            padding: 20px;
-            margin: 15px auto;
-            width: 60%;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Button */
-        button {
-            background-color: navy;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: darkblue;
         }
 
         /* Modal */
@@ -115,11 +82,40 @@
             cursor: pointer;
         }
 
-        /* Frame Styling */
-        .auth-frame {
-            width: 100%;
-            height: 500px;
+        /* Toggle Buttons */
+        .toggle-container {
+            margin-bottom: 15px;
+        }
+
+        .toggle-container button {
+            padding: 8px 12px;
             border: none;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .toggle-container .active {
+            background-color: navy;
+            color: white;
+        }
+
+        /* Input Fields */
+        .auth-form input {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+
+        .auth-form button {
+            background-color: navy;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
         /* Footer */
@@ -137,6 +133,9 @@
     <header>
         <h1>Welcome to Innovators Hub</h1>
         <p>Connect, Innovate, and Grow with Investors, Mentors, and Entrepreneurs.</p>
+        <div class="auth-buttons">
+            <button id="openAuthModal">Sign In / Sign Up</button>
+        </div>
     </header>
 
     <nav>
@@ -150,42 +149,32 @@
         </ul>
     </nav>
 
-    <section id="features">
-        <h2>Why Join Innovators Hub?</h2>
-        <div class="feature-box">
-            <h3>🚀 Submit & Manage Projects</h3>
-            <p>Showcase your ideas and get feedback from experts.</p>
-        </div>
-        <div class="feature-box">
-            <h3>💬 Collaborate with Innovators</h3>
-            <p>Join discussions, connect with mentors, and share knowledge.</p>
-        </div>
-        <div class="feature-box">
-            <h3>💰 Secure Investments</h3>
-            <p>Get funding from investors who believe in your vision.</p>
-        </div>
-    </section>
-
-    <div class="auth-toggle">
-        <button id="openLogin">Login</button>
-        <button id="openSignup">Sign Up</button>
-    </div>
-
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal">
+    <!-- Authentication Modal -->
+    <div id="authModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('loginModal')">&times;</span>
-            <h2>Login</h2>
-            <iframe src="frontend/pages/login.html" class="auth-frame"></iframe>
-        </div>
-    </div>
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="authTitle">Login</h2>
 
-    <!-- Signup Modal -->
-    <div id="signupModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('signupModal')">&times;</span>
-            <h2>Sign Up</h2>
-            <iframe src="frontend/pages/signup.html" class="auth-frame"></iframe>
+            <!-- Toggle Login/Signup -->
+            <div class="toggle-container">
+                <button id="toggleLogin" class="active">Login</button>
+                <button id="toggleSignup">Sign Up</button>
+            </div>
+
+            <!-- Toggle User Role -->
+            <div class="toggle-container">
+                <button id="roleInnovator" class="active">Innovator</button>
+                <button id="roleInvestor">Investor</button>
+            </div>
+
+            <form id="authForm" class="auth-form">
+                <input type="hidden" id="userRole" value="Innovator">
+                <input type="email" id="email" name="email" placeholder="Enter your email" required><br>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required><br>
+                <button type="submit">Continue</button>
+            </form>
+
+            <p id="authMessage"></p>
         </div>
     </div>
 
@@ -194,26 +183,46 @@
     </footer>
 
     <script>
-        // Open Modals
-        document.getElementById("openLogin").addEventListener("click", function() {
-            document.getElementById("loginModal").style.display = "block";
+        // Open and Close Modal
+        document.getElementById("openAuthModal").addEventListener("click", function() {
+            document.getElementById("authModal").style.display = "block";
         });
 
-        document.getElementById("openSignup").addEventListener("click", function() {
-            document.getElementById("signupModal").style.display = "block";
-        });
-
-        // Close Modal Function
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = "none";
+        function closeModal() {
+            document.getElementById("authModal").style.display = "none";
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = "none";
+            if (event.target == document.getElementById("authModal")) {
+                closeModal();
             }
         };
+
+        // Toggle Login/Signup
+        document.getElementById("toggleLogin").addEventListener("click", function() {
+            document.getElementById("authTitle").innerText = "Login";
+            document.getElementById("toggleLogin").classList.add("active");
+            document.getElementById("toggleSignup").classList.remove("active");
+        });
+
+        document.getElementById("toggleSignup").addEventListener("click", function() {
+            document.getElementById("authTitle").innerText = "Sign Up";
+            document.getElementById("toggleSignup").classList.add("active");
+            document.getElementById("toggleLogin").classList.remove("active");
+        });
+
+        // Toggle Role
+        document.getElementById("roleInnovator").addEventListener("click", function() {
+            document.getElementById("userRole").value = "Innovator";
+            document.getElementById("roleInnovator").classList.add("active");
+            document.getElementById("roleInvestor").classList.remove("active");
+        });
+
+        document.getElementById("roleInvestor").addEventListener("click", function() {
+            document.getElementById("userRole").value = "Investor";
+            document.getElementById("roleInvestor").classList.add("active");
+            document.getElementById("roleInnovator").classList.remove("active");
+        });
     </script>
 </body>
 </html>
