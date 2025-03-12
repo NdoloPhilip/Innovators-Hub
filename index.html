@@ -15,7 +15,7 @@
             text-align: center;
             background-color: #f4f4f4;
         }
-        
+
         /* Header Section */
         header {
             background-color: navy;
@@ -78,11 +78,7 @@
             margin-top: 0;
         }
 
-        /* Toggle Container */
-        .auth-toggle {
-            margin-top: 20px;
-        }
-
+        /* Button */
         button {
             background-color: navy;
             color: white;
@@ -96,10 +92,30 @@
             background-color: darkblue;
         }
 
-        /* Auth Forms */
-        .auth-form {
+        /* Popup Modal */
+        .modal {
             display: none;
-            margin-top: 20px;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            width: 40%;
+            border-radius: 10px;
+        }
+
+        .close {
+            float: right;
+            font-size: 1.5em;
+            cursor: pointer;
         }
 
         /* Footer */
@@ -147,13 +163,21 @@
     </section>
 
     <div class="auth-toggle">
-        <button id="toggleAuth">Sign In / Sign Up</button>
+        <button id="openModal">Sign In / Sign Up</button>
     </div>
 
-    <div class="auth-form" id="authForms">
-        <p><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/login.html">Login</a> | 
-           <a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/signup.html">Sign Up</a>
-        </p>
+    <!-- Modal for Login/Signup -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login / Sign Up</h2>
+            <form id="authForm">
+                <input type="email" id="email" name="email" placeholder="Enter your email" required><br><br>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
+                <button type="submit">Continue</button>
+            </form>
+            <p id="authMessage"></p>
+        </div>
     </div>
 
     <footer>
@@ -161,9 +185,40 @@
     </footer>
 
     <script>
-        document.getElementById("toggleAuth").addEventListener("click", function() {
-            var authForms = document.getElementById("authForms");
-            authForms.style.display = (authForms.style.display === "none" || authForms.style.display === "") ? "block" : "none";
+        // Open and Close Modal
+        document.getElementById("openModal").addEventListener("click", function() {
+            document.getElementById("authModal").style.display = "block";
+        });
+
+        document.querySelector(".close").addEventListener("click", function() {
+            document.getElementById("authModal").style.display = "none";
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("authModal")) {
+                document.getElementById("authModal").style.display = "none";
+            }
+        };
+
+        // Handle Login/Signup
+        document.getElementById("authForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch("https://NdoloPhilip.github.io/Innovators-Hub/backend/auth/check_user.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "exists") {
+                    window.location.href = "https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/dashboard.html"; 
+                } else {
+                    window.location.href = "https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/signup.html"; 
+                }
+            })
+            .catch(error => console.error("Error:", error));
         });
     </script>
 </body>
