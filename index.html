@@ -8,10 +8,34 @@
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Innovators Hub</h1>
-        <p>A platform for innovators and investors to collaborate.</p>
-        <a href="frontend/pages/signup.html"><button>Sign Up</button></a>
-        <a href="frontend/pages/login.html"><button>Login</button></a>
+        <h2>Welcome to Innovators Hub</h2>
+        <form id="authForm">
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <button type="submit">Continue</button>
+        </form>
+        <p id="message"></p>
     </div>
+
+    <script>
+        document.getElementById("authForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            
+            fetch("backend/auth/check_user.php", {  // Connects to PHP script
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "exists") {
+                    window.location.href = "frontend/pages/dashboard.html";  // Redirect if user exists
+                } else {
+                    window.location.href = "frontend/pages/signup.html";  // Redirect to signup
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
 </body>
 </html>
