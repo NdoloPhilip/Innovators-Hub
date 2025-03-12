@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - Innovators Hub</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Analytics Dashboard</h2>
+        <p><strong>Total Users:</strong> <span id="totalUsers"></span></p>
+        <p><strong>Total Projects:</strong> <span id="totalProjects"></span></p>
+        <p><strong>Total Funding:</strong> $<span id="totalFunding"></span></p>
+        <h3>Project Status Breakdown</h3>
+        <ul id="projectStatus"></ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            loadAnalytics();
+        });
+
+        function loadAnalytics() {
+            fetch("http://localhost/backend/admin/analytics_dashboard.php")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("totalUsers").innerText = data.total_users;
+                document.getElementById("totalProjects").innerText = data.total_projects;
+                document.getElementById("totalFunding").innerText = data.total_funding;
+                
+                let statusHtml = "";
+                data.project_status.forEach(status => {
+                    statusHtml += `<li>${status.status}: ${status.count} projects</li>`;
+                });
+                document.getElementById("projectStatus").innerHTML = statusHtml;
+            })
+            .catch(error => console.error("Error loading analytics:", error));
+        }
+    </script>
+</body>
+</html>
