@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaboration - Innovators Hub</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Collaboration</h2>
+        <select id="receiver"></select>
+        <textarea id="message" placeholder="Type your message..."></textarea>
+        <button onclick="sendMessage()">Send Message</button>
+        <h3>Messages</h3>
+        <div id="messagesList"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            loadUsers();
+            loadMessages();
+        });
+
+        function loadUsers() {
+            fetch("http://localhost/backend/auth/get_users.php")
+            .then(response => response.json())
+            .then(data => {
+                let options = "";
+                data.forEach(user => {
+                    options += `<option value="${user.id}">${user.name}</option>`;
+                });
+                document.getElementById("receiver").innerHTML = options;
+            })
+            .catch(error => console.error("Error loading users:", error));
+        }
+
+        function sendMessage() {
+            const receiver_id = document.getElementById("receiver").value;
+            const message = document.getElementById("message").value;
+            fetch("http://localhost/backend/collaboration/send_message.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `receiver_id=${receiver_id}&message=${message}`
+            }).then(() => loadMessages());
+        }
+
+        function loadMessages() {
+            fetch("http://localhost/backend/collaboration/get_messages.php")
+            .then(response => response.json())
+            .then(data => {
+                let messagesHtml = "";
+                data.forEach(msg => {
+                    messagesHtml += `<div class='message'><p>${msg.sender}: ${msg.message}</p></div>`;
+                });
+                document.getElementById("messagesList").innerHTML = messagesHtml;
+            })
+            .catch(error => console.error("Error loading messages:", error));
+        }
+    </script>
+</body>
+</html>
