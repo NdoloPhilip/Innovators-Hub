@@ -33,7 +33,7 @@
             font-size: 1.2em;
         }
 
-        /* Signup/Login Button at Top Right */
+        /* Sign In/Sign Up Button at Top Right */
         .auth-buttons {
             position: absolute;
             top: 20px;
@@ -58,7 +58,7 @@
             transform: scale(1.05);
         }
 
-        /* Navigation Menu (Inline) */
+        /* Inline Navigation Menu */
         nav {
             background-color: white;
             padding: 10px 0;
@@ -100,14 +100,6 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s;
-        }
-
-        .modal.show {
-            opacity: 1;
-            visibility: visible;
         }
 
         .modal-content {
@@ -121,7 +113,8 @@
             transition: transform 0.3s ease-in-out;
         }
 
-        .modal.show .modal-content {
+        .modal.show {
+            display: block;
             transform: translateY(0);
         }
 
@@ -169,7 +162,7 @@
             background-color: darkblue;
         }
 
-        /* Section Boxes (Centered & Clickable) */
+        /* Centered Clickable Sections */
         .section-container {
             display: flex;
             justify-content: center;
