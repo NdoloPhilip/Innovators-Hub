@@ -33,7 +33,7 @@
             font-size: 1.2em;
         }
 
-        /* Signup/Login Buttons at Top Right */
+        /* Signup/Login Button at Top Right */
         .auth-buttons {
             position: absolute;
             top: 20px;
@@ -44,10 +44,11 @@
             background-color: white;
             color: navy;
             border: 2px solid navy;
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 14px;
         }
 
         .auth-buttons button:hover {
@@ -55,7 +56,38 @@
             color: white;
         }
 
-        /* Modal */
+        /* Navigation Menu (Inline) */
+        nav {
+            background-color: white;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: navy;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: darkblue;
+        }
+
+        /* Smaller Modal */
         .modal {
             display: none;
             position: fixed;
@@ -69,16 +101,16 @@
 
         .modal-content {
             background-color: white;
-            margin: 10% auto;
-            padding: 20px;
-            width: 40%;
+            margin: 12% auto;
+            padding: 15px;
+            width: 30%;
             border-radius: 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .close {
             float: right;
-            font-size: 1.5em;
+            font-size: 1.2em;
             cursor: pointer;
         }
 
@@ -86,50 +118,75 @@
         .toggle-btn {
             background-color: navy;
             color: white;
-            padding: 10px;
+            padding: 8px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            display: block;
             width: 100%;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
 
         /* Input Fields */
         .auth-form input {
             width: 90%;
-            padding: 10px;
-            margin: 5px 0;
+            padding: 8px;
+            margin: 4px 0;
             border: 1px solid gray;
             border-radius: 5px;
+            font-size: 14px;
         }
 
         .auth-form button {
             background-color: navy;
             color: white;
-            padding: 10px;
+            padding: 8px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 14px;
         }
 
-        /* Sections */
+        /* Section Boxes (Centered & Clickable) */
+        .section-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
         .section {
             background-color: white;
-            padding: 40px;
-            margin: 20px;
+            padding: 30px;
+            margin: 10px;
             border-radius: 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            width: 30%;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .section:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 80%;
+            }
+            .section {
+                width: 80%;
+            }
         }
 
         /* Footer */
         footer {
             background-color: navy;
             color: white;
-            padding: 15px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -145,9 +202,9 @@
     <nav>
         <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Collaboration</a></li>
-            <li><a href="#">Funding</a></li>
+            <li><a href="frontend/pages/project_showcase.html">Projects</a></li>
+            <li><a href="frontend/pages/funding_investment.html">Funding</a></li>
+            <li><a href="frontend/pages/collaboration.html">Collaboration</a></li>
         </ul>
     </nav>
 
@@ -171,66 +228,29 @@
                 <input type="password" id="password" name="password" placeholder="Enter your password" required><br>
                 <button type="submit">Continue</button>
             </form>
-
-            <p id="authMessage"></p>
         </div>
     </div>
 
-    <!-- Sections -->
-    <div class="section">
-        <h2>🚀 Projects</h2>
-        <p>Browse through innovative projects from startups and entrepreneurs.</p>
-    </div>
+    <!-- Clickable Sections -->
+    <div class="section-container">
+        <div class="section" onclick="window.location.href='frontend/pages/project_showcase.html'">
+            <h2>🚀 Projects</h2>
+            <p>Browse through innovative projects from startups and entrepreneurs.</p>
+        </div>
 
-    <div class="section">
-        <h2>💬 Collaboration</h2>
-        <p>Connect with like-minded people and build amazing things together.</p>
-    </div>
+        <div class="section" onclick="window.location.href='frontend/pages/collaboration.html'">
+            <h2>💬 Collaboration</h2>
+            <p>Connect with like-minded people and build amazing things together.</p>
+        </div>
 
-    <div class="section">
-        <h2>💰 Funding</h2>
-        <p>Investors can support the most promising projects.</p>
+        <div class="section" onclick="window.location.href='frontend/pages/funding_investment.html'">
+            <h2>💰 Funding</h2>
+            <p>Investors can support the most promising projects.</p>
+        </div>
     </div>
 
     <footer>
         <p>&copy; 2024 Innovators Hub. All rights reserved.</p>
     </footer>
-
-    <script>
-        // Open and Close Modal
-        document.getElementById("openAuthModal").addEventListener("click", function() {
-            document.getElementById("authModal").style.display = "block";
-        });
-
-        function closeModal() {
-            document.getElementById("authModal").style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == document.getElementById("authModal")) {
-                closeModal();
-            }
-        };
-
-        // Toggle Login/Signup
-        document.getElementById("toggleAuth").addEventListener("click", function() {
-            var authType = document.getElementById("authType").value;
-            var authTitle = document.getElementById("authTitle");
-            var toggleButton = document.getElementById("toggleAuth");
-            var signupFields = document.getElementById("signupFields");
-
-            if (authType === "login") {
-                authTitle.innerText = "Sign Up";
-                toggleButton.innerText = "Switch to Login";
-                document.getElementById("authType").value = "signup";
-                signupFields.style.display = "block";
-            } else {
-                authTitle.innerText = "Login";
-                toggleButton.innerText = "Switch to Sign Up";
-                document.getElementById("authType").value = "login";
-                signupFields.style.display = "none";
-            }
-        });
-    </script>
 </body>
 </html>
