@@ -78,6 +78,30 @@
             margin-top: 0;
         }
 
+        /* Toggle Container */
+        .auth-toggle {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: navy;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkblue;
+        }
+
+        /* Auth Forms */
+        .auth-form {
+            display: none;
+            margin-top: 20px;
+        }
+
         /* Footer */
         footer {
             background-color: navy;
@@ -97,10 +121,12 @@
 
     <nav>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="frontend/pages/signup.html">Sign Up</a></li>
-            <li><a href="frontend/pages/login.html">Login</a></li>
+            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/">Home</a></li>
+            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/project_showcase.html">Projects</a></li>
+            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/collaboration.html">Collaboration</a></li>
+            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/funding_investment.html">Funding</a></li>
+            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/search_filter.html">Search</a></li>
+            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/notifications.html">Notifications</a></li>
         </ul>
     </nav>
 
@@ -120,8 +146,25 @@
         </div>
     </section>
 
+    <div class="auth-toggle">
+        <button id="toggleAuth">Sign In / Sign Up</button>
+    </div>
+
+    <div class="auth-form" id="authForms">
+        <p><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/login.html">Login</a> | 
+           <a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/signup.html">Sign Up</a>
+        </p>
+    </div>
+
     <footer>
         <p>&copy; 2024 Innovators Hub. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.getElementById("toggleAuth").addEventListener("click", function() {
+            var authForms = document.getElementById("authForms");
+            authForms.style.display = (authForms.style.display === "none" || authForms.style.display === "") ? "block" : "none";
+        });
+    </script>
 </body>
 </html>
