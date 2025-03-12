@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Notifications - Innovators Hub</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Email Notifications</h2>
+        <label for="recipient">Select User:</label>
+        <select id="recipient"></select>
+        <input type="text" id="subject" placeholder="Email Subject" required>
+        <textarea id="message" placeholder="Type your message..." required></textarea>
+        <button onclick="sendEmail()">Send Email</button>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            loadUsers();
+        });
+
+        function loadUsers() {
+            fetch("http://localhost/backend/auth/get_users.php")
+            .then(response => response.json())
+            .then(data => {
+                let options = "";
+                data.forEach(user => {
+                    options += `<option value="${user.id}">${user.name} (${user.email})</option>`;
+                });
+                document.getElementById("recipient").innerHTML = options;
+            })
+            .catch(error => console.error("Error loading users:", error));
+        }
+
+        function sendEmail() {
+            const user_id = document.getElementById("recipient").value;
+            const subject = document.getElementById("subject").value;
+            const message = document.getElementById("message").value;
+            
+            fetch("http://localhost/backend/notifications/email_notify.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `user_id=${user_id}&subject=${subject}&message=${message}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("status").innerText = data;
+            })
+            .catch(error => console.error("Error sending email:", error));
+        }
+    </script>
+</body>
+</html>
