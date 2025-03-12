@@ -49,11 +49,13 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 14px;
+            transition: background 0.3s, transform 0.2s;
         }
 
         .auth-buttons button:hover {
             background-color: navy;
             color: white;
+            transform: scale(1.05);
         }
 
         /* Navigation Menu (Inline) */
@@ -80,14 +82,15 @@
             color: navy;
             font-weight: bold;
             font-size: 16px;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.2s;
         }
 
         nav ul li a:hover {
             color: darkblue;
+            transform: scale(1.1);
         }
 
-        /* Smaller Modal */
+        /* Smooth Modal Animation */
         .modal {
             display: none;
             position: fixed;
@@ -97,6 +100,14 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
         }
 
         .modal-content {
@@ -106,6 +117,12 @@
             width: 30%;
             border-radius: 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
         }
 
         .close {
@@ -145,6 +162,11 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .auth-form button:hover {
+            background-color: darkblue;
         }
 
         /* Section Boxes (Centered & Clickable) */
@@ -163,7 +185,7 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
             width: 30%;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
         }
 
         .section:hover {
@@ -231,26 +253,20 @@
         </div>
     </div>
 
-    <!-- Clickable Sections -->
-    <div class="section-container">
-        <div class="section" onclick="window.location.href='frontend/pages/project_showcase.html'">
-            <h2>🚀 Projects</h2>
-            <p>Browse through innovative projects from startups and entrepreneurs.</p>
-        </div>
-
-        <div class="section" onclick="window.location.href='frontend/pages/collaboration.html'">
-            <h2>💬 Collaboration</h2>
-            <p>Connect with like-minded people and build amazing things together.</p>
-        </div>
-
-        <div class="section" onclick="window.location.href='frontend/pages/funding_investment.html'">
-            <h2>💰 Funding</h2>
-            <p>Investors can support the most promising projects.</p>
-        </div>
-    </div>
-
     <footer>
         <p>&copy; 2024 Innovators Hub. All rights reserved.</p>
     </footer>
+
+    <script>
+        function openModal() {
+            document.getElementById("authModal").classList.add("show");
+        }
+
+        function closeModal() {
+            document.getElementById("authModal").classList.remove("show");
+        }
+
+        document.getElementById("openAuthModal").addEventListener("click", openModal);
+    </script>
 </body>
 </html>
