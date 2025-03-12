@@ -1,13 +1,8 @@
 <?php
-// Database configuration file (config/database.php)
-
-$host = 'localhost'; // Change if using a remote server
-$dbname = 'innovators_hub';
-$user = 'username';
-$password = 'password';
+require_once 'env.php';
 
 try {
-    $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+    $pdo = new PDO("pgsql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
