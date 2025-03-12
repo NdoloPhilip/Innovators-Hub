@@ -1,0 +1,12 @@
+{
+    "name": "innovators-hub",
+    "version": "1.0.0",
+    "description": "Frontend for Innovators Hub",
+    "scripts": {
+      "start": "live-server frontend/pages"
+    },
+    "dependencies": {
+      "live-server": "^1.2.1"
+    }
+  }
+  
