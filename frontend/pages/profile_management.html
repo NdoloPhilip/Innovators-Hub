@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Management - Innovators Hub</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Profile Management</h2>
+        <form id="editProfileForm">
+            <input type="text" id="name" name="name" placeholder="Full Name" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <button type="submit">Update Profile</button>
+        </form>
+        <hr>
+        <h3>Change Password</h3>
+        <form id="changePasswordForm">
+            <input type="password" id="current_password" name="current_password" placeholder="Current Password" required>
+            <input type="password" id="new_password" name="new_password" placeholder="New Password" required>
+            <button type="submit">Change Password</button>
+        </form>
+        <hr>
+        <h3>Upload Profile Picture</h3>
+        <form id="uploadProfileForm" enctype="multipart/form-data">
+            <input type="file" id="profile_picture" name="profile_picture" required>
+            <button type="submit">Upload</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        document.getElementById("editProfileForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch("http://localhost/backend/user/edit_profile.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => { document.getElementById("message").innerText = data; })
+            .catch(error => console.error("Error:", error));
+        });
+
+        document.getElementById("changePasswordForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch("http://localhost/backend/user/change_password.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => { document.getElementById("message").innerText = data; })
+            .catch(error => console.error("Error:", error));
+        });
+
+        document.getElementById("uploadProfileForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch("http://localhost/backend/user/upload_profile.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => { document.getElementById("message").innerText = data; })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>

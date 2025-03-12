@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Project - Innovators Hub</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Submit a New Project</h2>
+        <form id="submitProjectForm">
+            <input type="text" id="title" name="title" placeholder="Project Title" required>
+            <textarea id="description" name="description" placeholder="Project Description" required></textarea>
+            <select id="category" name="category" required>
+                <option value="Technology">Technology</option>
+                <option value="Health">Health</option>
+                <option value="Finance">Finance</option>
+            </select>
+            <button type="submit">Submit Project</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        document.getElementById("submitProjectForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch("http://localhost/backend/projects/add_project.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("message").innerText = data;
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>
