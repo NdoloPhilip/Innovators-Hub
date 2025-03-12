@@ -82,22 +82,17 @@
             cursor: pointer;
         }
 
-        /* Toggle Buttons */
-        .toggle-container {
-            margin-bottom: 15px;
-        }
-
-        .toggle-container button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            margin: 5px;
-            cursor: pointer;
-        }
-
-        .toggle-container .active {
+        /* Toggle Button */
+        .toggle-btn {
             background-color: navy;
             color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
         }
 
         /* Input Fields */
@@ -116,6 +111,15 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+        }
+
+        /* Sections */
+        .section {
+            background-color: white;
+            padding: 40px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         /* Footer */
@@ -140,12 +144,10 @@
 
     <nav>
         <ul>
-            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/">Home</a></li>
-            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/project_showcase.html">Projects</a></li>
-            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/collaboration.html">Collaboration</a></li>
-            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/funding_investment.html">Funding</a></li>
-            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/search_filter.html">Search</a></li>
-            <li><a href="https://NdoloPhilip.github.io/Innovators-Hub/frontend/pages/notifications.html">Notifications</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Collaboration</a></li>
+            <li><a href="#">Funding</a></li>
         </ul>
     </nav>
 
@@ -153,22 +155,18 @@
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
+            <button id="toggleAuth" class="toggle-btn">Switch to Sign Up</button>
+
             <h2 id="authTitle">Login</h2>
 
-            <!-- Toggle Login/Signup -->
-            <div class="toggle-container">
-                <button id="toggleLogin" class="active">Login</button>
-                <button id="toggleSignup">Sign Up</button>
-            </div>
-
-            <!-- Toggle User Role -->
-            <div class="toggle-container">
-                <button id="roleInnovator" class="active">Innovator</button>
-                <button id="roleInvestor">Investor</button>
-            </div>
-
             <form id="authForm" class="auth-form">
-                <input type="hidden" id="userRole" value="Innovator">
+                <input type="hidden" id="authType" value="login">
+
+                <div id="signupFields" style="display: none;">
+                    <input type="text" id="fullName" name="fullName" placeholder="Full Name"><br>
+                    <input type="text" id="userRole" name="role" placeholder="Role (Innovator/Investor)"><br>
+                </div>
+
                 <input type="email" id="email" name="email" placeholder="Enter your email" required><br>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required><br>
                 <button type="submit">Continue</button>
@@ -176,6 +174,22 @@
 
             <p id="authMessage"></p>
         </div>
+    </div>
+
+    <!-- Sections -->
+    <div class="section">
+        <h2>🚀 Projects</h2>
+        <p>Browse through innovative projects from startups and entrepreneurs.</p>
+    </div>
+
+    <div class="section">
+        <h2>💬 Collaboration</h2>
+        <p>Connect with like-minded people and build amazing things together.</p>
+    </div>
+
+    <div class="section">
+        <h2>💰 Funding</h2>
+        <p>Investors can support the most promising projects.</p>
     </div>
 
     <footer>
@@ -199,29 +213,23 @@
         };
 
         // Toggle Login/Signup
-        document.getElementById("toggleLogin").addEventListener("click", function() {
-            document.getElementById("authTitle").innerText = "Login";
-            document.getElementById("toggleLogin").classList.add("active");
-            document.getElementById("toggleSignup").classList.remove("active");
-        });
+        document.getElementById("toggleAuth").addEventListener("click", function() {
+            var authType = document.getElementById("authType").value;
+            var authTitle = document.getElementById("authTitle");
+            var toggleButton = document.getElementById("toggleAuth");
+            var signupFields = document.getElementById("signupFields");
 
-        document.getElementById("toggleSignup").addEventListener("click", function() {
-            document.getElementById("authTitle").innerText = "Sign Up";
-            document.getElementById("toggleSignup").classList.add("active");
-            document.getElementById("toggleLogin").classList.remove("active");
-        });
-
-        // Toggle Role
-        document.getElementById("roleInnovator").addEventListener("click", function() {
-            document.getElementById("userRole").value = "Innovator";
-            document.getElementById("roleInnovator").classList.add("active");
-            document.getElementById("roleInvestor").classList.remove("active");
-        });
-
-        document.getElementById("roleInvestor").addEventListener("click", function() {
-            document.getElementById("userRole").value = "Investor";
-            document.getElementById("roleInvestor").classList.add("active");
-            document.getElementById("roleInnovator").classList.remove("active");
+            if (authType === "login") {
+                authTitle.innerText = "Sign Up";
+                toggleButton.innerText = "Switch to Login";
+                document.getElementById("authType").value = "signup";
+                signupFields.style.display = "block";
+            } else {
+                authTitle.innerText = "Login";
+                toggleButton.innerText = "Switch to Sign Up";
+                document.getElementById("authType").value = "login";
+                signupFields.style.display = "none";
+            }
         });
     </script>
 </body>
