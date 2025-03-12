@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Innovators Hub</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Notifications</h2>
+        <div id="notificationsList"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("http://localhost/backend/notifications/get_notifications.php")
+            .then(response => response.json())
+            .then(data => {
+                let notificationsHtml = "";
+                data.forEach(notification => {
+                    notificationsHtml += `<div class='notification'>
+                        <p>${notification.message}</p>
+                        <p><small>${notification.created_at}</small></p>
+                    </div>`;
+                });
+                document.getElementById("notificationsList").innerHTML = notificationsHtml;
+            })
+            .catch(error => console.error("Error loading notifications:", error));
+        });
+    </script>
+</body>
+</html>
